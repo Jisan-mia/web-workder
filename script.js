@@ -31,10 +31,3 @@ $calc.addEventListener('click', () => {
 
 
 
-
-
-
-
-
-
-

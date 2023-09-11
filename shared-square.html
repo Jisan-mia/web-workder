@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      button {
+        font-size: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <input id="input1" style="font-size: 2rem" value="" />
+    <br />
+    <h1>Result: <span id="result">0</span></h1>
+    <br />
+    <button id="square-me">Add</button>
+
+    <script>
+      const $input1 = document.getElementById("input1");
+      const $result = document.querySelector("#result");
+      if (!!window.SharedWorker) {
+        const sharedWorker = new SharedWorker("shared-worker.js");
+
+        document.querySelector("#square-me").addEventListener("click", () => {
+          sharedWorker.port.postMessage([
+            Number($input1.value),
+            Number($input1.value),
+          ]);
+          console.log("message posted to worker");
+        });
+
+        sharedWorker.port.onmessage = function (e) {
+          $result.textContent = e.data;
+          console.log("message received from worker");
+        };
+      }
+    </script>
+  </body>
+</html>
