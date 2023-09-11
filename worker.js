@@ -1,3 +1,7 @@
+importScripts('sub-worker.js')
+
+console.log(language)
+
 onmessage = function(message) {
   postMessage('started expensive calculation')
   let sum = 0;
